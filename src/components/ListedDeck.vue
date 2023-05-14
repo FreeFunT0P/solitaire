@@ -2,8 +2,8 @@
   <div class="cardSize ListedDeck">
     <img v-if="!$store.getters.listedDeck.length" src="@/assets/cards/emptySlot.png" alt="" class="noFocused">
     <img
-        v-on:click="focus()"
-        v-bind:class="{ focused: focusComponent === 'listedDeck', noFocused: focusComponent !== 'listedDeck' }"
+        v-on:click="focusCard()"
+        v-bind:class="{ focused: focusComponent?.[1] === 'listedDeck', noFocused: focusComponent?.[1] !== 'listedDeck' }"
         v-else :src="require(`@/assets/cards/face/${calculateLink}`)"
         alt=""
     >
@@ -25,8 +25,8 @@ export default {
     }
   },
   methods: {
-    focus(){
-      this.$store.commit('CHANGE_FOCUS', 'listedDeck')
+    focusCard(){
+      this.$store.commit('CHANGE_FOCUS', [this.listedDeck[0], 'listedDeck', 0])
     }
   },
   computed: {
@@ -36,7 +36,7 @@ export default {
       'focusComponent',
     ]),
     calculateLink: function () {
-      return this.listedDeck[this.listedDeck.length-1][0]
+      return this.listedDeck[0][0]
     }
   },
   watch: {

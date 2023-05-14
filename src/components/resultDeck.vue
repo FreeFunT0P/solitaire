@@ -24,7 +24,6 @@ export default {
     moveCard(){
       if (this.focusComponent !== null) {
         this.$store.commit('MOVE_CARD', this.deckName)
-        this.$store.commit('CHANGE_FOCUS', null)
       }
     }
   },
@@ -33,8 +32,8 @@ export default {
       'focusComponent',
     ]),
     calculateLink: function () {
-      return this.$store.getters[this.deckName]?.[this.$store.getters[this.deckName].length-1]?.[0]
-    }
+      return this.$store.getters[this.deckName]?.[0]?.[0]
+    },
   },
   watch: {
   }

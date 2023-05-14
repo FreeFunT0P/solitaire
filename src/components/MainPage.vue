@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" ref="main">
     <div class="undoButton" v-on:click="undoMove">
       <p style="margin: 0">Отменить ход</p>
     </div>
@@ -35,6 +35,7 @@ import MainDeck from '@/components/MainDeck'
 import ListedDeck from '@/components/ListedDeck'
 import resultDeck from '@/components/resultDeck'
 import shuffleDeck from '@/components/shuffleDeck'
+import eventBus from '@/helpers/event-bus'
 
 export default {
   name: 'MainPage',
@@ -57,6 +58,7 @@ export default {
   methods: {
     undoMove(){
       this.$store.commit('UNDO_MOVE')
+      eventBus.$emit('reset-move')
     },
     init(){
       this.$store.commit('INIT_GAME', this.initGameDeck)
@@ -64,6 +66,7 @@ export default {
     restart(){
       this.$store.commit('CLEAR_GAME_ARR')
       this.$store.commit('INIT_GAME', this.initGameDeck)
+      this.$store.commit('CHANGE_FOCUS', null)
     }
   },
   created() {
@@ -78,9 +81,6 @@ export default {
     });
   }
 }
-
-
-
 </script>
 
 <style>
@@ -122,5 +122,4 @@ export default {
   cursor: pointer;
   background-color: #004008;
 }
-
 </style>
